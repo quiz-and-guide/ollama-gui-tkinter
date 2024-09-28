@@ -207,7 +207,7 @@ def open_chat_frame(parent_frame):
                     chat_history.insert(tk.END, f"Tú: {content}\n\n")
                 elif role == 'assistant':
                     chat_history.insert(tk.END, f"{model_var.get()}: {content}\n\n")
-            chat_history.configure(state='disabled')
+            #chat_history.configure(state='disabled')
 
     def delete_conversation(filepath, row_frame):
         nonlocal conversation, conversation_filename
