@@ -149,7 +149,7 @@ def open_chat_frame(parent_frame):
         chat_history.configure(state='normal')
         chat_history.delete(1.0, tk.END)
         #chat_history.configure(state='disabled')
-        start_new_conversation()
+        #start_new_conversation()
 
     def sanitize_filename(name):
         # Remover caracteres inválidos para nombres de archivo
