@@ -17,9 +17,11 @@ def open_chat_frame(parent_frame):
     # Load the clear icon for the buttons
     clear_icon = tk.PhotoImage(file="./icons/clear.png")
     clear_icon_small = tk.PhotoImage(file="./icons/clear_small.png")
+    new_chat_icon = tk.PhotoImage(file="./icons/new_chat.png")
     # Keep a reference to prevent garbage collection
     parent_frame.clear_icon = clear_icon
     parent_frame.clear_icon_small = clear_icon_small
+    parent_frame.new_chat_icon = new_chat_icon
 
     # Load the play icon
     play_icon = tk.PhotoImage(file="./icons/play.png")
@@ -146,7 +148,7 @@ def open_chat_frame(parent_frame):
     def clear_chat():
         chat_history.configure(state='normal')
         chat_history.delete(1.0, tk.END)
-        chat_history.configure(state='disabled')
+        #chat_history.configure(state='disabled')
         start_new_conversation()
 
     def sanitize_filename(name):
@@ -174,12 +176,16 @@ def open_chat_frame(parent_frame):
 
     def load_conversation_history():
         # Limpiar los items existentes en el custom list
-        for widget in chat_history_frame.winfo_children():
-            widget.destroy()
+        #for widget in chat_history_frame.winfo_children():
+        #    widget.destroy()
         # Listar todos los archivos JSON en la carpeta 'history'
         if not os.path.exists('history'):
             os.makedirs('history')
         files = [f for f in os.listdir('history') if f.endswith('.json')]
+                # Conversation label
+        
+        # Keep references
+        clear_button.image = clear_icon_small
         # Ordenar los archivos por fecha de modificación (más recientes primero)
         files.sort(key=lambda x: os.path.getmtime(os.path.join('history', x)), reverse=True)
         for filename in files:
@@ -187,6 +193,7 @@ def open_chat_frame(parent_frame):
             # Obtener el nombre para mostrar (sin la extensión .json)
             display_name = os.path.splitext(filename)[0]
             # Añadir a la lista personalizada
+            #add_new_chat()
             add_conversation_to_history(display_name, filepath)
 
     def load_conversation(filepath):
@@ -221,12 +228,10 @@ def open_chat_frame(parent_frame):
             conversation = []
             conversation_filename = None
             clear_chat()
-            start_new_conversation()
-
+            #start_new_conversation()
     def add_conversation_to_history(display_name, filepath):
         row_frame = tk.Frame(chat_history_frame, bg='#2e2e2e')
         row_frame.pack(fill=tk.X, pady=1)
-
         # Conversation label
         label = tk.Label(row_frame, text=display_name, bg='#2e2e2e', fg='white', anchor='w')
         label.pack(side=tk.LEFT, fill=tk.X, expand=True)
@@ -240,6 +245,21 @@ def open_chat_frame(parent_frame):
         label.row_frame = row_frame
         label.filepath = filepath
         row_frame.filepath = filepath
+        
+    def add_new_chat():
+        row_frame = tk.Frame(chat_history_frame, bg='#2e2e2e')
+        row_frame.pack(fill=tk.X, pady=1)
+        print("adds new chat")
+        label_new = tk.Label(row_frame, text="New chat", bg='#2e2e2e', fg='white', anchor='w')
+        label_new.pack(side=tk.LEFT, fill=tk.X, expand=True)
+        label_new.bind("<Button-1>", start_new_conversation)
+
+        # Clear button
+        new_chat_button = tk.Button(row_frame, image=new_chat_icon, command=start_new_conversation, bg='#2e2e2e', borderwidth=0, activebackground='#3e3e3e')
+        new_chat_button.pack(side=tk.RIGHT)
+        # Keep references
+        new_chat_button.image = new_chat_icon
+        label_new.row_frame = row_frame  
 
     def attach_file():
         # Open file dialog to select a file
@@ -267,6 +287,7 @@ def open_chat_frame(parent_frame):
     main_frame = tk.Frame(parent_frame, bg='#2e2e2e')
     main_frame.pack(fill=tk.BOTH, expand=True)
 
+
     # Obtener dimensiones del parent_frame
     parent_frame.update_idletasks()
     screen_width = parent_frame.winfo_width()
@@ -279,7 +300,7 @@ def open_chat_frame(parent_frame):
     left_frame = tk.Frame(main_frame, width=left_frame_width, bg='#2e2e2e')
     left_frame.pack(side=tk.LEFT, fill=tk.Y)
     left_frame.pack_propagate(False)  # Mantener el ancho fijo
-
+   
     # Crear el canvas para la lista personalizada
     canvas = tk.Canvas(left_frame, bg='#2e2e2e', highlightthickness=0)
     canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
@@ -385,6 +406,9 @@ def open_chat_frame(parent_frame):
     )
     entry_scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
     entry.configure(yscrollcommand=entry_scrollbar.set)
+
+    # Añadir entrada de nuevo chat al historial
+    add_new_chat()
 
     # Cargar el historial de conversaciones existentes
     load_conversation_history()

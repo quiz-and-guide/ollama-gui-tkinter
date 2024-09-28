@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "11111x11111=123454321?"
+    },
+    {
+        "role": "assistant",
+        "content": "I'm afraid that's not correct.\n\nThe calculation is:\n\n11111 × 11111 = 123,456,321\n\nSo the answer is indeed 123,456,321."
+    }
+]
