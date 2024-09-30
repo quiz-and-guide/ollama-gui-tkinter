@@ -1,0 +1,18 @@
+[
+    {
+        "role": "user",
+        "content": "Hola, somos Manuel y mi madre Elsa"
+    },
+    {
+        "role": "assistant",
+        "content": "¡Hola Manuel y bienvenida Elsa! Me alegra conocerte. ¿En qué puedo ayudarte hoy? ¿Tienes alguna pregunta o necesitas ayuda con algo en particular? Estoy aquí para ayudarte."
+    },
+    {
+        "role": "user",
+        "content": "¿Qué tal estás?"
+    },
+    {
+        "role": "assistant",
+        "content": "Hola Manuel y Elsa, ¡qué bien! Estoy funcionando correctamente y listo para ayudar con cualquier pregunta o tema que desees discutir. ¿En qué puedo ayudarte hoy?"
+    }
+]

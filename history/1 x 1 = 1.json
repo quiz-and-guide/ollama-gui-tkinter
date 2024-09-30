@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "1 x 1 = 1"
+    },
+    {
+        "role": "assistant",
+        "content": "That's correct. The product of 1 and 1 is indeed 1."
+    }
+]

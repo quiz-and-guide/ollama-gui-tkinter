@@ -1,14 +1,13 @@
 # main.py
 import tkinter as tk
 from tkinter import messagebox
-import chat  # Importamos el módulo chat
+import chat  # Asegúrate de que chat.py esté en el mismo directorio o en el PYTHONPATH
 
 def open_chat():
-    # Limpiar el contenido actual del marco principal
     for widget in main_content_frame.winfo_children():
         widget.destroy()
     # Llamar a la función que crea la interfaz del chat en el marco principal
-    chat.open_chat_frame(main_content_frame)
+    chat.main(main_content_frame)
 
 def main():
     global root, main_content_frame
@@ -48,7 +47,7 @@ def main():
     root.config(menu=menu_bar)
 
     # Crear el marco principal donde se mostrará el chat u otros contenidos
-    main_content_frame = tk.Frame(root)
+    main_content_frame = tk.Frame(root, bg='#2e2e2e')
     main_content_frame.pack(fill=tk.BOTH, expand=True)
 
     # Iniciar el bucle principal
