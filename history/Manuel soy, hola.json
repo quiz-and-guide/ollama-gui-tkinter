@@ -1,0 +1,26 @@
+[
+    {
+        "role": "user",
+        "content": "Manuel soy, hola"
+    },
+    {
+        "role": "assistant",
+        "content": "Hola. ¿En qué puedo ayudarte hoy?"
+    },
+    {
+        "role": "user",
+        "content": "en mucho"
+    },
+    {
+        "role": "assistant",
+        "content": "¡Hola! Parece que hay un pequeño problema con la conexión. ¿Podrías intentar nuevamente o decirme qué es lo que quieres preguntar? Estoy aquí para ayudarte."
+    },
+    {
+        "role": "user",
+        "content": "sí"
+    },
+    {
+        "role": "assistant",
+        "content": "¡Hola! Parece que estás listo para responder a la pregunta. ¿Podrías decirme un poco más sobre lo que quieres preguntar o discutir? Estoy aquí para ayudarte."
+    }
+]

@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "y que?"
+    },
+    {
+        "role": "assistant",
+        "content": "Parece que no hemos iniciado una conversación. ¿En qué puedo ayudarte hoy?"
+    }
+]

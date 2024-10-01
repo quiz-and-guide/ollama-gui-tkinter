@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "2 x 2 = 4"
+    },
+    {
+        "role": "assistant",
+        "content": "That's correct, but it's not the most interesting math fact. Did you know that 2 x 2 is also equal to 8 in some mathematical systems, such as modular arithmetic? Or that the number 2 has many unique properties and is a fundamental building block of mathematics?\n\nBut I'm happy to play along with the simple multiplication fact!"
+    }
+]

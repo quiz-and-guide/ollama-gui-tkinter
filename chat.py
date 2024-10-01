@@ -234,12 +234,23 @@ class GUI:
         self.chat_history.configure(state='disabled')
         self.chat_history.see(tk.END)
 
-        # Update conversation
         self.conversation.append({'role': 'user', 'content': user_input})
         self.conversation.append({'role': 'assistant', 'content': response})
 
+        # Save conversation and handle first message logic
+        self.save_conversation()
+        if self.conversation_filename == "history/temp_conversation.json":
+            display_name = self.sanitize_filename(user_input[:20])
+            filename_base = display_name
+            new_conversation_filename = f'history/{filename_base}.json'
+            os.rename("history/temp_conversation.json", new_conversation_filename)
+            conversation_filename = new_conversation_filename
+            self.load_conversation(conversation_filename)
+            self.save_conversation()
+        else:
+            self.save_conversation()
+        # Now create the copy_button after loading the conversation
         last_ai_message = [msg['content'] for msg in self.conversation if msg['role'] == 'assistant'][-1]
-        # Create the copy button with the icon
         copy_button = tk.Button(
             self.chat_history,
             image=self.copy_icon,
@@ -248,22 +259,18 @@ class GUI:
             bg='#1e1e1e',
             activebackground='#1e1e1e'
         )
-
-        # Insert the button into the Text widget
         self.chat_history.window_create(tk.END, window=copy_button)
-        # Keep a reference to prevent garbage collection
         if not hasattr(self, 'widgets'):
             self.widgets = []
         self.widgets.append(copy_button)
-
         # Create a new file if this is the first message
-        if self.conversation_filename is None:
+        print("conversación: " + self.conversation_filename)
+        
+            #self.change_conversation_history_name(display_name)
+        if len(self.conversation) == 2:
             display_name = self.sanitize_filename(user_input[:20])
-            self.conversation_filename = f'history/{display_name}.json'
             self.change_conversation_history_name(display_name)
-
-        self.save_conversation()
-
+            #self.add_conversation_to_history(display_name,self.conversation_filename)
     def change_conversation_history_name(self, display_name):
         self.label.config(text=display_name)
     def get_ollama_response(self, prompt, model):
@@ -288,27 +295,35 @@ class GUI:
 
     def start_new_conversation_new_chat(self):
         self.conversation = []
-        self.conversation_filename = None  # Don't create a file until the first message is sent
         self.clear_chat()
-        display_name = 'New chat'
-        self.add_conversation_to_history(display_name, None) 
+        display_name = "New chat"
+        file_name = ("temp_conversation")
+        self.conversation_filename = f'history/{file_name}.json'
+        print("Viene de new chat")
+        self.add_conversation_to_history(display_name, self.conversation_filename) 
     def start_new_conversation(self):
         self.conversation = []
-        self.conversation_filename = None  # Don't create a file until the first message is sent
+        #self.save_conversation()
+        files = [f for f in os.listdir('history') if f.endswith('.json')]
+        files.sort(key=lambda x: os.path.getmtime(os.path.join('history', x)), reverse=True)
+        self.conversation_filename = files[0]
+        print("files[0]" + self.conversation_filename)
         self.clear_chat()
     def save_conversation(self):
+        print("saving conversation")
         os.makedirs('history', exist_ok=True)
         with open(self.conversation_filename, 'w', encoding='utf-8') as f:
             json.dump(self.conversation, f, ensure_ascii=False, indent=4)
 
     def load_conversation_history(self):
+        print("Viene de load_conversatio history")
         files = [f for f in os.listdir('history') if f.endswith('.json')]
         files.sort(key=lambda x: os.path.getmtime(os.path.join('history', x)), reverse=True)
         for filename in files:
             filepath = os.path.join('history', filename)
             display_name = os.path.splitext(filename)[0]
             self.add_conversation_to_history(display_name, filepath)
-
+        print("Load conversation history, ¿es correcto?")
     def load_conversation(self, filepath):
         print("Load conversation")
         print(filepath)
@@ -339,6 +354,7 @@ class GUI:
 
     def add_conversation_to_history(self, display_name, filepath):
         print(filepath)
+        print("Viene de add_conversation_to_history")
         row_frame = tk.Frame(self.chat_history_frame, bg='#2e2e2e')
         row_frame.pack(fill=tk.X, pady=2)
 

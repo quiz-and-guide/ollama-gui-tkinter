@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "6 x 6 = 36"
+    },
+    {
+        "role": "assistant",
+        "content": "That's close, but not quite correct. The correct answer is:\n\n6 x 6 = 36"
+    }
+]
