@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "1 x 1 = 12"
+    },
+    {
+        "role": "assistant",
+        "content": "I'm afraid that's not correct. The correct calculation is:\n\n1 x 1 = 1"
+    }
+]
